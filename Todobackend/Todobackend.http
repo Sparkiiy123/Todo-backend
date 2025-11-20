@@ -1,0 +1,6 @@
+@Todobackend_HostAddress = http://localhost:5290
+
+GET {{Todobackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
