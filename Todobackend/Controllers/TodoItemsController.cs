@@ -29,10 +29,22 @@ namespace Todobackend.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] bool isDone)
+        public async Task<IActionResult> Update(int id, [FromBody] TodoItem item)
         {
-            var updated = await _service.UpdateAsync(id, isDone);
+            if (item.Id == 0)
+            {
+                item.Id = id;
+            }
+
+
+            if (id != item.Id)
+            {
+                return BadRequest("Id in URL does not match Id in body");
+            }
+
+            var updated = await _service.UpdateAsync(item);
             if (updated == null) return NotFound();
+
             return Ok(updated);
         }
 

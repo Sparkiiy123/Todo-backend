@@ -23,14 +23,17 @@ namespace Todobackend.Services
             return item;
         }
 
-        public async Task<TodoItem?> UpdateAsync(int id, bool isDone)
+        // Pilna UpdateAsync ar TodoItem
+        public async Task<TodoItem?> UpdateAsync(TodoItem item)
         {
-            var item = await _context.Tasks.FindAsync(id);
-            if (item == null) return null;
+            var existing = await _context.Tasks.FindAsync(item.Id);
+            if (existing == null) return null;
 
-            item.IsDone = isDone;
+            existing.Title = item.Title;
+            existing.IsDone = item.IsDone;
+
             await _context.SaveChangesAsync();
-            return item;
+            return existing;
         }
 
         public async Task<bool> DeleteAsync(int id)
